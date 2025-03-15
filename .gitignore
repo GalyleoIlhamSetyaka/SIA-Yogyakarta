@@ -1,5 +1,6 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 /.phpunit.cache
 /node_modules
 /public/build
@@ -29,3 +30,6 @@ config/
 =======
 config/sia-yogyakarta-firebase-adminsdk-fbsvc-de804024f7.json
 >>>>>>> d491a54ce696f75bfafe99161ed12511210a19a3
+=======
+sia-yogyakarta-firebase-adminsdk-fbsvc-de804024f7.json
+>>>>>>> 01ea82283888c7b7a0442ea3fe39b8327f514eae
