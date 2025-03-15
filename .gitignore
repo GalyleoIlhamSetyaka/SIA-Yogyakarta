@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 /.phpunit.cache
 /node_modules
 /public/build
@@ -25,3 +26,6 @@ yarn-error.log
 =======
 config/
 >>>>>>> 744979c9ddb630d32882e0206c771da9d1cd9769
+=======
+config/sia-yogyakarta-firebase-adminsdk-fbsvc-de804024f7.json
+>>>>>>> d491a54ce696f75bfafe99161ed12511210a19a3
