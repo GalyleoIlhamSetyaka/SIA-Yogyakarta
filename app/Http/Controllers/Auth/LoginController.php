@@ -3,28 +3,43 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Providers\RouteServiceProvider;
-use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
-use App\Services\FirebaseService;
+use App\Services\FirebaseServices; // Perbaikan di sini
 use Illuminate\Support\Facades\Auth;
+use App\Models\User;
 
 class LoginController extends Controller
 {
-    // ...
+    protected $firebaseService;
 
-    public function login(Request $request, FirebaseService $firebaseService)
+    public function __construct(FirebaseService $firebaseService) // Perbaikan di sini
     {
-        $this->validateLogin($request);
+        $this->firebaseService = $firebaseService;
+    }
+
+    public function showLoginForm()
+    {
+        return view('auth.login');
+    }
+
+    public function login(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required',
+        ]);
 
         try {
-            $signInResult = $firebaseService->signInWithEmailAndPassword($request->email, $request->password);
+            $signInResult = $this->firebaseService->signInWithEmailAndPassword($request->email, $request->password);
 
             $user = User::where('email', $request->email)->first();
 
-            Auth::login($user);
-
-            return redirect()->intended(RouteServiceProvider::HOME);
+            if ($user) {
+                Auth::login($user);
+                return redirect()->intended('/home');
+            } else {
+                return back()->withErrors(['message' => 'User not found']);
+            }
         } catch (\Exception $e) {
             return back()->withErrors(['message' => $e->getMessage()]);
         }

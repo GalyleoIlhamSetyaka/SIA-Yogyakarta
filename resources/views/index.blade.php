@@ -16,8 +16,8 @@
                 <a href="/" class="text-white">Home</a>
                 <a href="/about" class="text-white">About</a>
                 <a href="/contact" class="text-white">Contact</a>
-                <a href="/login" class="text-white">Login</a>
-            </div>
+                <a href="{{ route('login') }}" class="text-white">Login</a>
+                </div>
             <div class="md:hidden">
                 <button class="text-white">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
