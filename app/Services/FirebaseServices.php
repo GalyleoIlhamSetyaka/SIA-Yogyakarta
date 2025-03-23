@@ -2,37 +2,84 @@
 
 namespace App\Services;
 
-use Kreait\Firebase\Factory;
-use Kreait\Firebase\Auth;
+use Illuminate\Support\Facades\Auth; 
 
-class FirebaseService
-{
-    protected $auth;
+use Kreait\Firebase\Auth as FirebaseAuth; 
 
-    public function __construct()
-    {
-        $this->auth = (new Factory)
-            ->withServiceAccount(config('firebase.credentials.file'))
-            ->createAuth();
+  
+
+class FirebaseController extends Controller 
+
+{ 
+
+    protected $firebaseAuth; 
+
+    public function __construct(FirebaseAuth $firebaseAuth) 
+
+    { 
+
+        $this->firebaseAuth = $firebaseAuth; 
+
+    } 
+
+    // Signup 
+
+    public function signup(Request $request) 
+
+    { 
+
+        $email = $request->input('email'); 
+
+        $password = $request->input('password'); 
+
+        try { 
+
+            $user = $this->firebaseAuth->createUserWithEmailAndPassword($email, $password); 
+
+return 'User created: '. $user->uid; 
+
+        } catch (\Exception $e) { 
+
+            return 'Error: ' . $e->getMessage(); 
+
+        } 
+
+    } 
+
+    // Login 
+
+    public function login(Request $request) 
+
+    { 
+
+        $email = $request->input('email'); 
+
+        $password = $request->input('password'); 
+
+        try { 
+
+            $signInResult = $this->firebaseAuth->signInWithEmailAndPassword($email, $password); 
+
+            return 'Successfully signed in: ' . $signInResult->data()['idToken']; 
+
+        } catch (\Exception $e) { 
+
+            return 'Error: ' . $e->getMessage(); 
+
+        } 
+
     }
+    
+    public function logout() 
 
-    public function registerWithEmailAndPassword($email, $password)
-    {
-        return $this->auth->createUserWithEmailAndPassword($email, $password);
-    }
+    { 
 
-    public function signInWithEmailAndPassword($email, $password)
-    {
-        return $this->auth->signInWithEmailAndPassword($email, $password);
-    }
+        // Clear the authentication token on the client side 
 
-    public function verifyIdToken($idToken)
-    {
-        return $this->auth->verifyIdToken($idToken);
-    }
+        // Example: echo '<script>localStorage.removeItem("firebaseAuthToken");</script>'; 
 
-    public function getUser($uid)
-    {
-        return $this->auth->getUser($uid);
-    }
+        return 'Logout successful'; 
+
+    } 
+
 }
