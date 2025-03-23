@@ -16,7 +16,7 @@
                 <a href="/" class="text-white">Home</a>
                 <a href="/about" class="text-white">About</a>
                 <a href="/contact" class="text-white">Contact</a>
-                <a href="{{ route('login') }}" class="text-white">Login</a>
+                <a href="/login" class="text-white">Login</a>
                 </div>
             <div class="md:hidden">
                 <button class="text-white">
